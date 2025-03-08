@@ -11,6 +11,7 @@ Text::Text()
     _text = "";
     _fontSize = 10;
     _color = sf::Color::White;
+    _visible = true;
 }
 
 Text::Text(std::string text, int fontSize) : Text()

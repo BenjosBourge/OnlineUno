@@ -110,6 +110,15 @@ std::vector<Entity> Coordinator::getEntitiesFromTag(std::string tag)
     return finalEntities;
 }
 
+std::string Coordinator::getTag(Entity entity)
+{
+    if (entity == NULL_ENTITY)
+        return "null";
+    if (!hasComponent<Tag>(entity))
+        return "";
+    return getComponent<Tag>(entity)._tag;
+}
+
 void Coordinator::removeEntitiesFromTag(std::string tag)
 {
     std::vector<Entity> entities = getEntitiesFromTag(tag);

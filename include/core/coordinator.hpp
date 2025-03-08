@@ -25,6 +25,7 @@ public:
     void update();
     Entity getEntityFromTag(std::string tag);
     std::vector<Entity> getEntitiesFromTag(std::string tag);
+    std::string getTag(Entity entity);
 
     void removeEntitiesFromTag(std::string tag);
 
@@ -38,6 +39,8 @@ public:
     template<typename T> T &addComponent(Entity entity, T component);
     template<typename T> void removeComponent(Entity entity);
     template<typename T> T& getComponent(Entity entity);
+    template<typename T> T& getComponent(std::string tag);
+    template<typename T, typename U> T& getSibling(U component);
     template<typename T> bool hasComponent(Entity entity);
     template<typename T> Signature getComponentSignature();
 
@@ -75,3 +78,5 @@ private:
 #include "../../src/core/coordinator.tpp"
 
 std::shared_ptr<Coordinator> getCoordinator();
+
+#define CD getCoordinator()

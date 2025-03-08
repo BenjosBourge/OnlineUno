@@ -9,8 +9,9 @@
 #include <map>
 #include <SFML/Graphics.hpp>
 #include "../texture.hpp"
+#include "../component.hpp"
 
-class SpriteRenderer {
+class SpriteRenderer : public Component {
 public:
     SpriteRenderer();
     SpriteRenderer(textureType texture, int rectWidth, int rectHeight);
@@ -29,6 +30,11 @@ public:
     bool _isFlippedVertically;
     float _rotation;
     sf::Color _color;
+    int _yRenderingOffset;
 
     bool _overlay;
+    sf::Color _colorOverlay;
+
+    sf::Color _colorMask;
+    float _colorMaskOpacity;
 };

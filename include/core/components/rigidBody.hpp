@@ -9,8 +9,9 @@
 #include <map>
 #include <SFML/Graphics.hpp>
 #include "../entity.hpp"
+#include "../component.hpp"
 
-class RigidBody {
+class RigidBody : public Component {
 public:
     RigidBody();
     RigidBody(bool verlet, sf::Vector2f acceleration);

@@ -31,7 +31,6 @@ void ComponentManager::init()
     registerComponent<UiButton>();
     registerComponent<Child>();
     registerComponent<Text>();
-    registerComponent<PlayerController>();
     registerComponent<RigidBody>();
 }
 

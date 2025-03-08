@@ -7,8 +7,9 @@
 #include <memory>
 #include <queue>
 #include <map>
+#include "../component.hpp"
 
-class Transform {
+class Transform : public Component {
 public:
     Transform();
     Transform(float x, float y);

@@ -5,6 +5,5 @@
 #pragma once
 
 enum textureType {
-    TEXTURE_TYPE_NONE,
-    TEXTURE_TYPE_EXAMPLE
+    TEXTURE_TYPE_NONE
 };

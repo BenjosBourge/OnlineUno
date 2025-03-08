@@ -34,6 +34,18 @@ T& Coordinator::getComponent(Entity entity)
 }
 
 template<typename T>
+T& Coordinator::getComponent(std::string tag)
+{
+    return _componentManager->getComponent<T>(getEntityFromTag(tag));
+}
+
+template<typename T, typename U>
+T& Coordinator::getSibling(U component)
+{
+    return _componentManager->getComponent<T>(component.getEntity());
+}
+
+template<typename T>
 bool Coordinator::hasComponent(Entity entity)
 {
     Signature signature = _entityManager->getSignature(entity);

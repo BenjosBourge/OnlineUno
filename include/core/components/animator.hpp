@@ -8,6 +8,7 @@
 #include <queue>
 #include <map>
 #include "../texture.hpp"
+#include "../component.hpp"
 
 class Animation {
 public:
@@ -21,7 +22,7 @@ public:
     float _frameTime;
 };
 
-class Animator {
+class Animator : public Component {
 public:
     Animator();
     Animator(Animation animation);

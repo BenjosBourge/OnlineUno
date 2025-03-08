@@ -6,6 +6,7 @@
 #include <bitset>
 
 using Entity = unsigned int;
+
 const Entity MAX_ENTITIES = 5000;
 const Entity NULL_ENTITY = 5000;
 

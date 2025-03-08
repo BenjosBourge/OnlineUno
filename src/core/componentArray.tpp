@@ -24,10 +24,11 @@ void ComponentArray<T>::addComponent(Entity entity)
         return;
     }
     if (_components.find(entity) != _components.end()) {
-        std::cerr << "Component already exists" << std::endl;
+        std::cerr << "Component already exists: " << entity << " for component: " << typeid(T).name() << std::endl;
         return;
     }
     _components[entity] = std::make_shared<T>();
+    _components[entity]->_entity = entity;
 }
 
 template<typename T>
@@ -38,10 +39,11 @@ void ComponentArray<T>::addComponent(Entity entity, T component)
         return;
     }
     if (_components.find(entity) != _components.end()) {
-        std::cerr << "Component already exists" << std::endl;
+        std::cerr << "Component already exists: " << entity << " for component: " << typeid(T).name() << std::endl;
         return;
     }
     _components[entity] = std::make_shared<T>(component);
+    _components[entity]->_entity = entity;
 }
 
 template<typename T>
@@ -66,7 +68,7 @@ T& ComponentArray<T>::getComponent(Entity entity)
         return *std::make_shared<T>();
     }
     if (_components.find(entity) == _components.end()) {
-        std::cerr << "Component not found, returning a temporary component" << std::endl;
+        std::cerr << "Component not found: " << entity << " for component: " << typeid(T).name() << " returning a temporary component" << std::endl;
         return *std::make_shared<T>();
     }
     return *_components[entity];

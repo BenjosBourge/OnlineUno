@@ -10,26 +10,13 @@
 #include "../../../../include/core/components/ui.hpp"
 #include "../../../../include/core/ecs.hpp"
 
-const std::string vertexShader = R"(
-    void main() {
-    gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
-    gl_TexCoord[0] = gl_MultiTexCoord0;
-    gl_FrontColor = gl_Color;
-}
-)";
-
-const std::string fragmentShader = R"(
-    uniform sampler2D texture;
-    void main() {
-        vec4 color = texture2D(texture, gl_TexCoord[0].xy);
-        gl_FragColor = vec4(1.0, 1.0, 0.0, color.a); // Jaune avec la même alpha
-    }
-)";
-
 DrawSystem::DrawSystem()
 {
     _signature = getCoordinator()->getComponentSignature<Transform>();
     _signature |= getCoordinator()->getComponentSignature<SpriteRenderer>();
+
+    if (!shaderFragment.loadFromFile("shader/fragment.frag", sf::Shader::Fragment))
+        std::cerr << "Shader not loaded" << std::endl;
 }
 
 DrawSystem::~DrawSystem()
@@ -50,7 +37,7 @@ void DrawSystem::update(float deltaTime)
     float cameraB = 1;
     Entity camera = coordinator->getEntityFromTag("camera");
     if (camera != NULL_ENTITY && coordinator->hasComponent<Transform>(camera)
-                                && coordinator->hasComponent<Camera>(camera)) {
+        && coordinator->hasComponent<Camera>(camera)) {
         auto &transform = coordinator->getComponent<Transform>(camera);
         cameraX = transform._x;
         cameraY = transform._y;
@@ -68,32 +55,27 @@ void DrawSystem::update(float deltaTime)
         auto &transform = coordinator->getComponent<Transform>(entity);
         auto &spriteRenderer = coordinator->getComponent<SpriteRenderer>(entity);
 
-        int r = spriteRenderer._color.r;
-        int g = spriteRenderer._color.g;
-        int b = spriteRenderer._color.b;
+        float r = spriteRenderer._color.r / 255.f;
+        float g = spriteRenderer._color.g / 255.f;
+        float b = spriteRenderer._color.b / 255.f;
 
         sprite.setTexture(*(coordinator->getTexture(spriteRenderer._texture)));
         sprite.setTextureRect({spriteRenderer._offsetX, spriteRenderer._offsetY, spriteRenderer._rectWidth, spriteRenderer._rectHeight});
-        sprite.setPosition({transform._x - cameraX, transform._y - cameraY});
+        sprite.setPosition({transform._x - cameraX, transform._y - cameraY + spriteRenderer._yRenderingOffset});
         sprite.setRotation(spriteRenderer._rotation);
         sprite.setOrigin({(float)spriteRenderer._rectWidth / 2, (float)spriteRenderer._rectHeight / 2});
         sprite.setScale({transform._width * (spriteRenderer._isFlippedHorizontally ? -1 : 1), transform._height * (spriteRenderer._isFlippedVertically ? -1 : 1)});
-        if (!coordinator->hasComponent<UserInterface>(entity))
-            sprite.setColor({(sf::Uint8) ((float)r * cameraR), (sf::Uint8) ((float)g * cameraG), (sf::Uint8) ((float)b * cameraB), (sf::Uint8) (255 * spriteRenderer._opacity)});
-        else
-            sprite.setColor({(sf::Uint8) r, (sf::Uint8) g, (sf::Uint8) b, (sf::Uint8) (255 * spriteRenderer._opacity)});
-        if (spriteRenderer._overlay) {
-            sf::Sprite overlay = sprite;
 
-            overlay.setScale({transform._width * (spriteRenderer._isFlippedHorizontally ? -1 : 1) * 1.1f, transform._height * (spriteRenderer._isFlippedVertically ? -1 : 1) * 1.1f});
-
-            sf::Shader shader;
-            if (!shader.loadFromMemory(fragmentShader, sf::Shader::Fragment))
-                std::cerr << "Shader loaded" << std::endl;
-            shader.setUniform("texture", sf::Shader::CurrentTexture);
-            coordinator->_window->draw(overlay, &shader);
-        }
-        coordinator->_window->draw(sprite);
+        sf::Glsl::Vec3 colorOverlay(spriteRenderer._colorOverlay.r / 255.f, spriteRenderer._colorOverlay.g / 255.f, spriteRenderer._colorOverlay.b / 255.f);
+        sf::Glsl::Vec3 colorMask(spriteRenderer._colorMask.r / 255.f, spriteRenderer._colorMask.g / 255.f, spriteRenderer._colorMask.b / 255.f);
+        shaderFragment.setUniform("texture", sf::Shader::CurrentTexture);
+        shaderFragment.setUniform("uColor", sf::Glsl::Vec3(r, g, b));
+        shaderFragment.setUniform("uColorOverlay", colorOverlay);
+        shaderFragment.setUniform("uOverlay", spriteRenderer._overlay ? 1.f : 0.f);
+        shaderFragment.setUniform("uColorMask", colorMask);
+        shaderFragment.setUniform("uColorMaskOpacity", spriteRenderer._colorMaskOpacity);
+        shaderFragment.setUniform("uOpacity", spriteRenderer._opacity);
+        coordinator->_window->draw(sprite, &shaderFragment);
     }
 }
 

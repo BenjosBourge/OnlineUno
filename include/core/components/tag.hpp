@@ -8,8 +8,10 @@
 #include <queue>
 #include <map>
 #include <string>
+#include "../entity.hpp"
+#include "../component.hpp"
 
-class Tag {
+class Tag : public Component {
 public:
     Tag();
     Tag(std::string tag);

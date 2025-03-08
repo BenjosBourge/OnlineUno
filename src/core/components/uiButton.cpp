@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "../../../include/core/components/uiButton.hpp"
 #include "../../../include/core/components/transform.hpp"
+#include "../../../include/core/coordinator.hpp"
 
 UiButton::UiButton()
 {
@@ -12,9 +13,9 @@ UiButton::UiButton()
     _zoomWhenHovered = false;
     _isHovered = false;
     _currentSize = 1;
-    _zoomEffect = 1.05;
-    _zoomSpeed = 1;
-    _dezoomSpeed = 1;
+    _zoomEffect = 1.2;
+    _zoomSpeed = 3.;
+    _dezoomSpeed = 4.;
     _delay = 0;
     _isActivated = false;
     _firstFrameClicked = false;
@@ -49,9 +50,10 @@ UiButton::UiButton(void (*function)(Entity), float delay) : UiButton()
     _delay = delay;
 }
 
-void UiButton::setZoomWhenHovered(bool flag, const Transform& transform)
+void UiButton::setZoomWhenHovered(bool flag)
 {
     _zoomWhenHovered = flag;
+    Transform &transform = getCoordinator()->getComponent<Transform>(_entity);
     _scale = sf::Vector2f(transform._width, transform._height);
 }
 

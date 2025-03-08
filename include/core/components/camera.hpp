@@ -7,10 +7,11 @@
 #include <memory>
 #include <queue>
 #include <map>
+#include "../component.hpp"
 
 #include <SFML/Graphics.hpp>
 
-class Camera {
+class Camera : public Component {
 public:
     Camera();
     ~Camera();

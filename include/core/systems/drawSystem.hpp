@@ -7,6 +7,7 @@
 #include <memory>
 #include <queue>
 #include <map>
+#include <SFML/Graphics.hpp>
 #include "../system.hpp"
 
 class DrawSystem : public System {
@@ -20,4 +21,7 @@ public:
 
     void layerChanged(Entity entity);
     void yChanged(Entity entity);
+
+    sf::Shader shaderFragment;
+    sf::Shader shaderVertex;
 };

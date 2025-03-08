@@ -66,3 +66,16 @@ float my_sin(float x) {
 float my_cos(float x) {
     return cos(x);
 }
+
+float my_sqrt(float x)
+{
+    return sqrt(x);
+}
+
+float my_pow(float x, int y)
+{
+    float result = 1;
+    for (int i = 0; i < y; i++)
+        result *= x;
+    return result;
+}

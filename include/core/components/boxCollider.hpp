@@ -9,6 +9,7 @@
 #include <map>
 #include "../texture.hpp"
 #include "../entity.hpp"
+#include "../component.hpp"
 
 #define LAYER_COLLISION_PLAYER 0b1
 #define LAYER_COLLISION_ENEMY 0b10
@@ -18,7 +19,7 @@ enum CollisionMode {
     COLLISION_MODE_DYNAMIC
 };
 
-class BoxCollider {
+class BoxCollider : public Component {
 public:
     BoxCollider();
     BoxCollider(float width, float height);

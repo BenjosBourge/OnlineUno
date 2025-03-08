@@ -33,3 +33,11 @@ add_custom_command(
         COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_BINARY_DIR}/assets"
         COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/assets" "${CMAKE_BINARY_DIR}/assets"
 )
+
+# File Creator
+file( GLOB SRC_FILE_CREATOR fileCreator/*.cpp)
+file( GLOB INCLUDE_FILE_CREATOR fileCreator/*.hpp)
+
+add_executable(FileCreator
+        ${SRC_FILE_CREATOR}
+        ${INCLUDE_FILE_CREATOR})

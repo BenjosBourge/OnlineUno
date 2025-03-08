@@ -29,6 +29,9 @@ void TextRenderingSystem::update(float deltaTime)
         auto &text = coordinator->getComponent<Text>(entity);
         auto &transform = coordinator->getComponent<Transform>(entity);
 
+        if (!text._visible)
+            continue;
+
         Entity camera = coordinator->getEntityFromTag("camera");
         auto &cameraTransform = coordinator->getComponent<Transform>(camera);
 

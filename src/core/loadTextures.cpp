@@ -6,9 +6,9 @@
 
 void Coordinator::loadTextures()
 {
-    _font.loadFromFile("assets/neon_pixel-7.ttf");
+    _font.loadFromFile("assets/RifficFree-Bold.ttf");
 
     sf::Texture texture;
     texture.loadFromFile("assets/blank_square.png");
-    _textures.emplace_back(TEXTURE_TYPE_EXAMPLE, texture);
+    _textures.emplace_back(TEXTURE_TYPE_NONE, texture);
 }

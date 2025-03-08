@@ -9,8 +9,9 @@
 #include <map>
 #include "../texture.hpp"
 #include "../entity.hpp"
+#include "../component.hpp"
 
-class InteractionBoxCollider {
+class InteractionBoxCollider : public Component {
 public:
     InteractionBoxCollider();
     InteractionBoxCollider(float width, float height);

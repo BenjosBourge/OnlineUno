@@ -8,8 +8,9 @@
 #include <queue>
 #include <map>
 #include "../texture.hpp"
+#include "../component.hpp"
 
-class Trail {
+class Trail : public Component {
 public:
     Trail();
     Trail(float timerSpawn);

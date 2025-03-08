@@ -18,5 +18,3 @@
 #include "components/child.hpp"
 #include "components/text.hpp"
 #include "components/rigidBody.hpp"
-
-#include "../components/playerController.hpp"

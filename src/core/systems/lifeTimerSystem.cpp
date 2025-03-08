@@ -21,7 +21,7 @@ void LifeTimerSystem::update(float deltaTime)
 {
     std::shared_ptr<Coordinator> coordinator = getCoordinator();
 
-    for (auto const& entity : _entitiesThisFrame) {
+    for (auto& entity : _entitiesThisFrame) {
         auto &lifeTimer = coordinator->getComponent<LifeTimer>(entity);
 
         lifeTimer._lifeTime -= deltaTime;

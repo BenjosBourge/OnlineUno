@@ -10,8 +10,9 @@
 #include <SFML/Graphics.hpp>
 #include "../texture.hpp"
 #include "../entity.hpp"
+#include "../component.hpp"
 
-class Child {
+class Child : public Component {
 public:
     Child();
     Child(Entity parent);

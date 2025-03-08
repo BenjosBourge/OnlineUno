@@ -8,8 +8,9 @@
 #include <queue>
 #include <map>
 #include "../texture.hpp"
+#include "../component.hpp"
 
-class LifeTimer {
+class LifeTimer : public Component {
 public:
     LifeTimer();
     LifeTimer(float lifeTime);

@@ -7,7 +7,7 @@
 
 EntityManager::EntityManager()
 {
-    for (Entity entity = 0; entity < MAX_ENTITIES; entity++)
+    for (Entity entity = 0; entity < MAX_ENTITIES; entity += 1)
         _freeEntities.push(entity);
 }
 
@@ -20,7 +20,7 @@ Entity EntityManager::createEntity()
 {
     if (_freeEntities.empty()) {
         std::cerr << "ERROR: No more entities available." << std::endl;
-        return -1;
+        return NULL_ENTITY;
     }
     Entity entity = _freeEntities.front();
     _freeEntities.pop();

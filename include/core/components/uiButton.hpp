@@ -10,8 +10,9 @@
 #include <SFML/Graphics.hpp>
 #include "../entity.hpp"
 #include "transform.hpp"
+#include "../component.hpp"
 
-class UiButton {
+class UiButton : public Component {
 public:
     UiButton();
     UiButton(void (*function)(Entity));
@@ -31,7 +32,7 @@ public:
     bool _neverClicked;
 
     //Hovering
-    void setZoomWhenHovered(bool flag, const Transform& transform);
+    void setZoomWhenHovered(bool flag);
     sf::Vector2f _scale;
     bool _zoomWhenHovered;
     bool _isHovered;

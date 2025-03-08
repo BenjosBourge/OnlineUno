@@ -18,6 +18,10 @@ SpriteRenderer::SpriteRenderer()
     _rotation = 0.0f;
     _overlay = false;
     _color = sf::Color(255, 255, 255);
+    _yRenderingOffset = 0;
+    _colorOverlay = sf::Color(255, 255, 0);
+    _colorMask = sf::Color(0, 0, 0);
+    _colorMaskOpacity = 0.f;
 }
 
 SpriteRenderer::SpriteRenderer(textureType texture, int rectWidth, int rectHeight) : SpriteRenderer()

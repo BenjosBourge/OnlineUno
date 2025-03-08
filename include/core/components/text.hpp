@@ -9,8 +9,9 @@
 #include <map>
 #include <string>
 #include <SFML/Graphics.hpp>
+#include "../component.hpp"
 
-class Text {
+class Text : public Component {
 public:
     Text();
     Text(std::string text, int fontSize);
@@ -20,4 +21,5 @@ public:
     std::string _text;
     sf::Color _color;
     int _fontSize;
+    bool _visible;
 };
